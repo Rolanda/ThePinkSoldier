@@ -1,0 +1,15 @@
+
+public class Plateau {
+	int taille;
+	int[][] table = new int[taille][taille];
+	boolean[][] tableBis = new boolean[taille][taille];
+	int indice;
+	
+	public Plateau(int[][] table, boolean[][] tableBis, int indice) {
+		for (int i = 0; i < tableBis.length; i++) {
+			for (int j = 0; j < tableBis.length; j++) {
+				
+			}
+		}
+	}
+}

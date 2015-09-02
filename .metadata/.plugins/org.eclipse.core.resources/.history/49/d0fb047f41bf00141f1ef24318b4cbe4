@@ -1,0 +1,19 @@
+
+public class Somme<T> {
+	T somme1;
+	T somme2;
+	
+	public Somme(T somme1, T somme2) {
+		this.somme1 = somme1;
+		this.somme2 = somme2;
+	}
+	
+	public int calculabiliterDesDeuxSommes(T somme3){
+		int tmp = (int)this.somme1 + (int)this.somme2;
+		return tmp;
+	}
+	
+	public String toString(){
+		return this.somme1 "+" this.somme2 + "=" + calculabiliterDesDeuxSommes();
+	}
+}

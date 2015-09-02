@@ -1,0 +1,214 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+public class Calendar extends JPanel {
+
+  private Map<String, List<EtudiantID>> classe;
+  private Map<String, List<Cour>> edt;
+  private String[] mois = new String[] {"janvier", "fevrier", "mars", "avril", "mai", "juin",
+      "juillet", "aout", "septembre", "octobre", "decembre"};
+  private int idxMonth = 5;
+
+  public Calendar() {
+    classe = new HashMap<String, List<EtudiantID>>();
+    edt = new HashMap<String, List<Cour>>();
+    try {
+      initClasse();
+      initEdt();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    this.setLayout(new FlowLayout(FlowLayout.CENTER));
+    this.setBackground(Color.WHITE);
+    this.setPreferredSize(new Dimension(320, 480));
+    initComponent();
+  }
+
+  private void initClasse() throws IOException {
+    for (int i = 1; i <= 4; i++) {
+      // InputStream f = getClass().getResourceAsStream("/ressource/class"+i);
+      // Scanner s = new Scanner(f);
+      // System.out.println(s.hasNext() ? s.next() : "tttttttttttttttttttttttttttttt");
+      BufferedReader br = new BufferedReader(new FileReader("ressource/class" + i));
+      classe.put("class" + i, new ArrayList<EtudiantID>());
+      try {
+        String eleve = br.readLine();
+        while (eleve != null) {
+          classe.get("class" + i).add(
+              new EtudiantID(getNum(eleve), "ressource/test.png", getPrenom(eleve) + " "
+                  + getNom(eleve), "class" + i, getStatus(eleve)));
+          eleve = br.readLine();
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      } finally {
+        br.close();
+      }
+    }
+  }
+
+  private void initEdt() throws IOException {
+    String[] semaine = new String[] {"lundi", "mardi", "mercredi", "jeudi", "vendredi"};
+    for (String jour : semaine) {
+      BufferedReader br = new BufferedReader(new FileReader("ressource/" + jour));
+      edt.put(jour, new ArrayList<Cour>());
+      try {
+        String journee = br.readLine();
+        while (journee != null) {
+          edt.get(jour)
+              .add(
+                  new Cour(getIntitule(journee), getDebut(journee), getFin(journee),
+                      getClasse(journee)));
+          journee = br.readLine();
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      } finally {
+        br.close();
+      }
+    }
+  }
+
+  // String readFile(String fileName) throws IOException {
+  // BufferedReader br = new BufferedReader(new FileReader(fileName));
+  // try {
+  // StringBuilder sb = new StringBuilder();
+  // String line = br.readLine();
+  //
+  // while (line != null) {
+  // sb.append(line);
+  // sb.append("\n");
+  // line = br.readLine();
+  // }
+  // return sb.toString();
+  // } finally {
+  // br.close();
+  // }
+  // }
+
+  private String getPrenom(String line) {
+    return line.split(" ", 2)[0];
+  }
+
+  private String getNom(String line) {
+    return line.split(" ", 3)[1];
+  }
+
+  private int getNum(String line) {
+    return Integer.parseInt(line.split(" ", 4)[2]);
+  }
+
+  private String getStatus(String line) {
+    return line.split(" ", 4)[3];
+  }
+
+  private int getDebut(String line) {
+    return Integer.parseInt(line.split(" ", 2)[0]);
+  }
+
+  private int getFin(String line) {
+    return Integer.parseInt(line.split(" ", 3)[1]);
+  }
+
+  private String getIntitule(String line) {
+    return line.split(" ", 4)[2];
+  }
+
+  private List<EtudiantID> getClasse(String line) {
+    return classe.get(line.split(" ", 4)[3]);
+  }
+
+  public Cour getCourAt(String jour, int heureDebut) {
+    for (Cour cour : edt.get(jour)) {
+      if (cour.startAt(heureDebut)) {
+        return cour;
+      }
+    }
+    return null;
+  }
+
+  private void initComponent() {
+    JLabel micheline = new JLabel("<"), joseph = new JLabel(">"), arthur =
+        new JLabel(mois[idxMonth].toUpperCase());
+    micheline.addMouseListener(new MouseListener() {
+
+      @Override
+      public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        idxMonth--;
+        arthur.setText(mois[(idxMonth+mois.length)%mois.length].toUpperCase());
+      }
+    });
+    joseph.addMouseListener(new MouseListener() {
+
+      @Override
+      public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        idxMonth++;
+        arthur.setText(mois[(idxMonth+mois.length)%mois.length].toUpperCase());
+      }
+    });
+    this.add(micheline);this.add(arthur);this.add(joseph);
+
+  }
+}

@@ -1,0 +1,39 @@
+
+public class Temps implements Comparable<Temps>{
+	int h;
+	int m;
+	int s;
+	
+	public Temps(int h, int m, int s) {
+		this.h = h;
+		this.m = m;
+		this.s = s;
+	}
+	
+	public Temps add(Temps t){
+		Temps tmp = new Temps(this.h, this.m, this.s);
+		this.h += t.h;
+		this.m += t.m;
+		this.s += t.s;
+		if(this.s >= 60){
+			this.s = this.s - 60;
+			this.m += 1;
+		}
+		if(this.m >= 60){
+			this.m = this.m - 60;
+			this.h += 1;
+		}
+		return tmp;
+	}
+	
+	@Override
+	public int compareTo(Temps arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	public String toString(){
+		return ""+this.h+":"+this.m+":"+this.s;
+	}
+
+}

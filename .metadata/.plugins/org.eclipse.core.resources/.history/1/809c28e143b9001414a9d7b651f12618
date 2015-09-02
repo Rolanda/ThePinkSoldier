@@ -1,0 +1,15 @@
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+
+public class Main {
+
+	public static void main(String[] args) {
+		ArrayList<Integer> tableau = new ArrayList<Integer>();
+		Random r = new Random();
+		Scanner sc = new 
+
+	}
+
+}

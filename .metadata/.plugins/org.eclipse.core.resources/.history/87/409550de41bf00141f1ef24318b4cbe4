@@ -1,0 +1,14 @@
+
+public class Calculatrice {
+
+	public static void main(String[] args) {
+		Somme<Integer> calc = new Somme<Integer>(null, null);
+		try {
+			System.out.println(calc.toString());
+		} catch (NullPointerException e) {
+			// TODO: handle exception
+		}
+
+	}
+
+}

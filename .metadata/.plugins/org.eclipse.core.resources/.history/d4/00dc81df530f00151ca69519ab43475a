@@ -1,0 +1,742 @@
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.ListSelectionModel;
+
+public class ManagementPanel extends JPanel {
+
+
+  private static final long serialVersionUID = 1L;
+  private JTextField recherche;
+  private JButton menu;
+  // private JLabel coursHorraire;
+  private JToggleButton triAZ, triIntelligent, triAbsenceRetard, vue1, vue2, vue3;
+  private DefaultListModel<EtudiantID> listModel = new DefaultListModel<EtudiantID>();
+  private DefaultListModel<EtudiantID> rechercheEtudiant = new DefaultListModel<EtudiantID>();
+  private DefaultListModel<EtudiantID> vueDefault = new DefaultListModel<EtudiantID>();
+  private DefaultListModel<String> afficheVueDefault = new DefaultListModel<String>();
+  private DefaultListModel<String> afficheVueUne = new DefaultListModel<String>();
+  private DefaultListModel<String> afficheVueDeux = new DefaultListModel<String>();
+  private DefaultListModel<String> afficheVueTrois = new DefaultListModel<String>();
+  @SuppressWarnings("rawtypes")
+  private JList listeEleve;
+  private Color absence = Color.red, retard = Color.yellow, normal = Color.gray;
+  private List<String> absenceList = new ArrayList<String>();
+  private List<String> retardList = new ArrayList<String>();
+  private List<String> normalList = new ArrayList<String>();
+  private EtudiantID[] etudiantIDs, test;
+  private Fenetre fenetre;
+  private JPanel window;
+  private List<EtudiantID> etudiantIDs2;
+  @SuppressWarnings("rawtypes")
+  private JList listeEtudiant;
+  private JPanel search;
+  private boolean retourNonChangeant = true;
+  private boolean mettreIcon = true;
+
+  public ManagementPanel() {
+    absenceList = new ArrayList<String>();
+    retardList = new ArrayList<String>();
+    normalList = new ArrayList<String>();
+    this.setLayout(null);
+    this.setBackground(Color.white);
+    if (!false) {
+      initComponent();
+    }
+  }
+
+  public ManagementPanel(Fenetre fenetre, List<EtudiantID> etudiantIDs2) {
+    this.setFenetre(fenetre);
+    if (retourNonChangeant) {
+      retourNonChangeant = false;
+      this.etudiantIDs = new EtudiantID[etudiantIDs2.size()];
+      this.etudiantIDs2 = etudiantIDs2;
+      for (int i = 0; i < etudiantIDs2.size(); i++) {
+        if (etudiantIDs2.get(i).getStatus().equals("Normal")) {
+          normalList.add(etudiantIDs2.get(i).getNomEleve());
+        } else if (etudiantIDs2.get(i).getStatus().equals("Retard")) {
+          retardList.add(etudiantIDs2.get(i).getNomEleve());
+        } else {
+          absenceList.add(etudiantIDs2.get(i).getNomEleve());
+        }
+      }
+    }
+    this.setLayout(null);
+    this.setPreferredSize(new Dimension(320, 480));
+    this.setBackground(Color.white);
+    initComponent();
+  }
+
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  public void initComponent() {
+    search = new JPanel(null);
+    window = new JPanel(null);
+    recherche = new JTextField(fenetre.getCurrentCour().getNom());
+    recherche.setBounds(5, 0, 295, 30);
+    recherche.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (window.isVisible()) {
+          window.setVisible(false);
+        } else {
+          rechercheEtudiant.removeAllElements();
+          for (int i = 0; i < etudiantIDs2.size(); i++) {
+            etudiantIDs[i] = etudiantIDs2.get(i);
+          }
+          test = new EtudiantID[etudiantIDs.length];
+          test = search(recherche.getText(), etudiantIDs);
+          search.setBounds(5, 31, 295, test.length * 50);
+          search.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+          search.setBackground(Color.WHITE);
+          if (recherche.getText().length() == 0) {
+            search.setVisible(false);
+          } else {
+            search.setVisible(true);
+          }
+          for (int i = 0; i < test.length; i++) {
+            rechercheEtudiant.addElement(test[i]);
+          }
+          listeEtudiant = new JList();
+          listeEtudiant.setBounds(2, 2, 290, (test.length * 50) - 50);
+          listeEtudiant.setModel(rechercheEtudiant);
+          listeEtudiant.scrollRectToVisible(listeEtudiant.getBounds());
+          listeEtudiant.setCellRenderer(new SelectedListCellRenderer());
+          listeEtudiant.setDragEnabled(true);
+          listeEtudiant.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+          JScrollPane totoScroll = new JScrollPane();
+          totoScroll.getViewport().add(listeEtudiant);
+          totoScroll.setBounds(2, 2, 290, (test.length * 50) - 50);
+          totoScroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+          listeEtudiant.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseExited(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+              if (e.getClickCount() == 2) {
+                search.setVisible(false);
+                int idxSearch = listeEtudiant.locationToIndex(e.getPoint());
+                EtudiantID envoyer2 = null;
+                for (int i = 0; i < rechercheEtudiant.size(); i++) {
+                  if (rechercheEtudiant.getElementAt(i).getNomEleve()
+                      .equals(test[idxSearch].getNomEleve())) {
+                    envoyer2 = rechercheEtudiant.getElementAt(i);
+                  }
+                }
+                fenetre.changePanel(new EtudiantPanel(fenetre, envoyer2));
+              }
+            }
+          });
+          listeEtudiant.repaint();
+          listeEtudiant.revalidate();
+          totoScroll.repaint();
+          search.add(totoScroll);
+        }
+      }
+
+    });
+    recherche.addMouseListener(new MouseListener() {
+
+      @Override
+      public void mouseReleased(MouseEvent e) {}
+
+      @Override
+      public void mousePressed(MouseEvent e) {}
+
+      @Override
+      public void mouseExited(MouseEvent e) {}
+
+      @Override
+      public void mouseEntered(MouseEvent e) {}
+
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        recherche.setText("");
+      }
+    });
+    menu = new JButton();
+    menu.setBounds(300, 0, 15, 30);
+    menu.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        window.setBounds(100, 26, 200, 100);
+        window.setBackground(Color.white);
+        window.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        window.setVisible(true);
+        JButton deco = new JButton("Deconnection");
+        deco.setBounds(20, 25, 150, 50);
+        deco.addActionListener(new ActionListener() {
+
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            if (search.isVisible()) {
+              search.setVisible(false);
+            } else {
+              int retour = JOptionPane.showConfirmDialog(window, "Deconnection ?");
+              if (retour == JOptionPane.OK_OPTION) {
+                fenetre.showMainPanel();
+                window.setVisible(false);
+              } else if (retour == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(window, "Ok !");
+                window.setVisible(false);
+              } else {
+                window.setVisible(false);
+              }
+            }
+          }
+
+        });
+        window.add(deco);
+      }
+    });
+    triAZ = new JToggleButton("A-Z");
+    triAZ.setBounds(15, 50, 65, 30);
+    triAZ.setFont(new Font("Deja vu", Font.BOLD, 15));
+    triAZ.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (triIntelligent.isSelected()) {
+          triIntelligent.setSelected(false);
+        } else if (triAbsenceRetard.isSelected()) {
+          triAbsenceRetard.setSelected(false);
+        }
+        if (vue1.isSelected()) {
+          triAZ(e, afficheVueUne);
+        } else if (vue2.isSelected()) {
+          triAZ(e, afficheVueDeux);
+        } else if (vue3.isSelected()) {
+          triAZ(e, afficheVueTrois);
+        } else {
+          triAZ(e, afficheVueDefault);
+        }
+        listeEleve.repaint();
+        listeEleve.revalidate();
+      }
+    });
+    triIntelligent = new JToggleButton("Intelligent");
+    triIntelligent.setBounds(80, 50, 120, 30);
+    triIntelligent.setFont(new Font("Deja vu", Font.BOLD, 15));
+    triIntelligent.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (triAZ.isSelected()) {
+          triAZ.setSelected(false);
+        } else if (triAbsenceRetard.isSelected()) {
+          triAbsenceRetard.setSelected(false);
+        }
+        if (vue1.isSelected()) {
+          triIntelligent(e, afficheVueUne);
+        } else if (vue2.isSelected()) {
+          triIntelligent(e, afficheVueDeux);
+        } else if (vue3.isSelected()) {
+          triIntelligent(e, afficheVueTrois);
+        } else {
+          triIntelligent(e, afficheVueDefault);
+        }
+        listeEleve.repaint();
+        listeEleve.revalidate();
+      }
+    });
+    triAbsenceRetard = new JToggleButton("Recap'");
+    triAbsenceRetard.setBounds(200, 50, 100, 30);
+    triAbsenceRetard.setFont(new Font("Deja vu", Font.BOLD, 15));
+    triAbsenceRetard.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (triAZ.isSelected()) {
+          triAZ.setSelected(false);
+        } else if (triIntelligent.isSelected()) {
+          triIntelligent.setSelected(false);
+        }
+        if (vue1.isSelected()) {
+          triAbsenceRetard(e, afficheVueUne);
+        } else if (vue2.isSelected()) {
+          triAbsenceRetard(e, afficheVueDeux);
+        } else if (vue3.isSelected()) {
+          triAbsenceRetard(e, afficheVueTrois);
+        } else {
+          triAbsenceRetard(e, afficheVueDefault);
+        }
+        listeEleve.repaint();
+        listeEleve.revalidate();
+      }
+    });
+
+    vue1 = new JToggleButton("Vue 1");
+    vue1.setBounds(15, 100, 80, 30);
+    vue1.setFont(new Font("Deja vu", Font.BOLD, 15));
+    vue1.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (vue2.isSelected()) {
+          vue2.setSelected(false);
+        } else if (vue3.isSelected()) {
+          vue3.setSelected(false);
+        }
+        vueUne(e);
+        lesTries(e, afficheVueUne);
+        listeEleve.repaint();
+        listeEleve.revalidate();
+      }
+    });
+    vue2 = new JToggleButton("Vue 2");
+    vue2.setBounds(95, 100, 80, 30);
+    vue2.setFont(new Font("Deja vu", Font.BOLD, 15));
+    vue2.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (vue1.isSelected()) {
+          vue1.setSelected(false);
+        } else if (vue3.isSelected()) {
+          vue3.setSelected(false);
+        }
+        vueDeux(e);
+        lesTries(e, afficheVueDeux);
+        listeEleve.repaint();
+        listeEleve.revalidate();
+      }
+    });
+    vue3 = new JToggleButton("Vue 3");
+    vue3.setBounds(175, 100, 80, 30);
+    vue3.setFont(new Font("Deja vu", Font.BOLD, 15));
+    vue3.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (vue1.isSelected()) {
+          vue1.setSelected(false);
+        } else if (vue2.isSelected()) {
+          vue2.setSelected(false);
+        }
+        vueTrois(e);
+        lesTries(e, afficheVueTrois);
+        listeEleve.repaint();
+        listeEleve.revalidate();
+      }
+    });
+
+    listeEleve = new JList();
+    listeEleve.setCellRenderer(new SelectedListCellRenderer());
+    // listeEleve.setLayout(new GridBagLayout());
+    listeEleve.setFont(new Font("Deja vu", Font.LAYOUT_RIGHT_TO_LEFT, 16));
+    listeEleve.setBounds(15, 150, 280, 280);
+    listeEleve.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+    listeEleve.scrollRectToVisible(listeEleve.getBounds());
+    listeEleve.setDragEnabled(true);
+    listeEleve.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    for (int i = 0; i < etudiantIDs2.size(); i++) {
+      listModel.addElement(etudiantIDs2.get(i));
+    }
+    this.remplissageModel(listModel);
+    this.remplissageVueDefault(afficheVueDefault, vueDefault, "Default");
+    System.out.println(listModel+"\n"+listModel.size()+"\n");
+    System.out.println(vueDefault+"\n"+vueDefault.size()+"\n");
+    System.out.println(afficheVueDefault+"\n"+afficheVueDefault.size()+"\n");
+    listeEleve.addMouseListener(new MouseListener() {
+
+      @Override
+      public void mouseReleased(MouseEvent e) {}
+
+      @Override
+      public void mousePressed(MouseEvent e) {}
+
+      @Override
+      public void mouseExited(MouseEvent e) {}
+
+      @Override
+      public void mouseEntered(MouseEvent e) {}
+
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 1) {
+          int index = listeEleve.locationToIndex(e.getPoint());
+          if (normalList.contains(vueDefault.getElementAt(index).getNomEleve())) {
+            retardList.add(vueDefault.getElementAt(index).getNomEleve());
+            normalList.remove(vueDefault.getElementAt(index).getNomEleve());
+            setStatus("Retard", index);
+          } else if (retardList.contains(vueDefault.getElementAt(index).getNomEleve())) {
+            absenceList.add(vueDefault.getElementAt(index).getNomEleve());
+            retardList.remove(vueDefault.getElementAt(index).getNomEleve());
+            setStatus("Absent", index);
+          } else if (absenceList.contains(vueDefault.getElementAt(index).getNomEleve())) {
+            normalList.add(vueDefault.getElementAt(index).getNomEleve());
+            absenceList.remove(vueDefault.getElementAt(index).getNomEleve());
+            setStatus("Normal", index);
+          }
+        } else if (e.getClickCount() == 2) {
+          int idx = listeEleve.locationToIndex(e.getPoint());
+          fenetre.changePanel(new EtudiantPanel(fenetre, vueDefault.getElementAt(idx)));
+        }
+        listeEleve.repaint();
+        listeEleve.revalidate();
+      }
+    });
+    JScrollPane scrollPane = new JScrollPane();
+    scrollPane.getViewport().add(listeEleve);
+    scrollPane.setBounds(15, 150, 280, 280);
+    scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+
+    this.add(recherche);
+    this.add(search);
+    this.add(window);
+    this.add(menu);
+    this.add(triAZ);
+    this.add(triIntelligent);
+    this.add(triAbsenceRetard);
+    this.add(vue1);
+    this.add(vue2);
+    this.add(vue3);
+    this.add(scrollPane);
+  }
+
+  public void lesTries(ActionEvent e, DefaultListModel<String> vue) {
+    if (triAZ.isSelected()) {
+      triAZ(e, vue);
+    } else if (triIntelligent.isSelected()) {
+      triIntelligent(e, vue);
+    } else if (triAbsenceRetard.isSelected()) {
+      triAbsenceRetard(e, vue);
+    } else {
+      triAZ(e, afficheVueDefault);
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private void remplissageVueDefault(DefaultListModel<String> labelEtudiantModel,
+      DefaultListModel<EtudiantID> etudiantModel, String label) {
+    labelEtudiantModel.removeAllElements();
+    for (int i = 0; i < etudiantModel.size(); i++) {
+      switch (label) {
+        case "Un":
+          labelEtudiantModel.addElement(etudiantModel.get(i).getVue1());
+          break;
+        case "Deux":
+          labelEtudiantModel.addElement(etudiantModel.get(i).getVue2());
+          break;
+        case "Trois":
+          labelEtudiantModel.addElement(etudiantModel.get(i).getVue3());
+          break;
+        default:
+          labelEtudiantModel.addElement(etudiantModel.get(i).getVue1());
+          break;
+      }
+    }
+    this.listeEleve.setModel(labelEtudiantModel);
+  }
+
+  private void remplissageModel(DefaultListModel<EtudiantID> etudiantModelB) {
+    vueDefault.removeAllElements();
+    for (int i = 0; i < listModel.size(); i++) {
+      vueDefault.addElement(etudiantModelB.get(i));
+    }
+  }
+
+  private void testVue(DefaultListModel<String> test) {
+    if (vue1.isSelected()) {
+      this.remplissageVueDefault(test, vueDefault, "Un");
+    } else if (vue2.isSelected()) {
+      this.remplissageVueDefault(test, vueDefault, "Deux");
+    } else if (vue3.isSelected()) {
+      this.remplissageVueDefault(test, vueDefault, "Trois");
+    } else {
+      this.remplissageVueDefault(test, vueDefault, "Defaut");
+    }
+  }
+
+  private void triAZ(ActionEvent event, DefaultListModel<String> test) {
+    if (triAZ.isSelected()) {
+      List<String> trier = new ArrayList<String>();
+      for (int i = 0; i < vueDefault.size(); i++) {
+        trier.add(vueDefault.get(i).getNomEleve());
+      }
+      System.out.println(trier+"\n"+trier.size()+"\n");
+      Collections.sort(trier);
+      System.out.println(trier+"\n"+trier.size()+"\n");
+      vueDefault.removeAllElements();
+      System.out.println(vueDefault+"\n"+vueDefault.size()+"\n");
+      for (int i = 0; i < trier.size(); i++) {
+        for (int j = 0; j < listModel.size(); j++) {
+          if (listModel.getElementAt(i).getNomEleve().equals(trier.get(j))) {
+            vueDefault.addElement(listModel.getElementAt(j));
+            System.out.println(listModel.getElementAt(j)+"\n");
+          }
+        }
+      }
+      System.out.println(vueDefault+"\n"+vueDefault.size()+"\n");
+      testVue(test);
+    } else {
+      testVue(afficheVueDefault);
+      this.vueDefaut();
+    }
+    listeEleve.repaint();
+    listeEleve.revalidate();
+  }
+
+  private void triIntelligent(ActionEvent event, DefaultListModel<String> test) {
+    if (triIntelligent.isSelected()) {
+      List<String> trier = new ArrayList<String>();
+      if (!absenceList.isEmpty()) {
+        trier.addAll(absenceList);
+        if (!retardList.isEmpty()) {
+          trier.addAll(retardList);
+        }
+        if (!normalList.isEmpty()) {
+          trier.addAll(normalList);
+        }
+      } else if (absenceList.isEmpty()) {
+        trier.addAll(retardList);
+        if (!normalList.isEmpty()) {
+          trier.addAll(normalList);
+        }
+      } else {
+        trier.addAll(normalList);
+      }
+      vueDefault.removeAllElements();
+      for (int i = 0; i < trier.size(); i++) {
+        for (int j = 0; j < listModel.size(); j++) {
+          if (trier.get(i).equals(listModel.getElementAt(j).getNomEleve())) {
+            vueDefault.addElement(listModel.getElementAt(j));
+          }
+        }
+      }
+      testVue(test);
+    } else {
+      testVue(afficheVueDefault);
+      this.vueDefaut();
+    }
+  }
+
+  private void triAbsenceRetard(ActionEvent event, DefaultListModel<String> test) {
+    if (triAbsenceRetard.isSelected()) {
+      List<String> trier = new ArrayList<String>();
+      if (!absenceList.isEmpty()) {
+        trier.addAll(absenceList);
+        if (!retardList.isEmpty()) {
+          trier.addAll(retardList);
+        }
+      } else if (absenceList.isEmpty()) {
+        if (!retardList.isEmpty()) {
+          trier.addAll(retardList);
+        }
+      }
+      vueDefault.removeAllElements();
+      for (int i = 0; i < trier.size(); i++) {
+        for (int j = 0; j < listModel.size(); j++) {
+          if (trier.get(i).equals(listModel.getElementAt(j).getNomEleve())) {
+            vueDefault.addElement(listModel.getElementAt(j));
+          }
+        }
+      }
+      testVue(test);
+    } else {
+      testVue(afficheVueDefault);
+      this.vueDefaut();
+    }
+  }
+
+  private void vueDefaut() {
+    if (!vue1.isSelected() && !vue2.isSelected() && !vue3.isSelected()) {
+      listeEleve.setFixedCellHeight(50);
+      listeEleve.setFixedCellWidth(50);
+      listeEleve.setLayoutOrientation(JList.VERTICAL);
+    }
+  }
+
+  private void vueUne(ActionEvent event) {
+    if (vue1.isSelected()) {
+      afficheVueDefault.removeAllElements();
+      afficheVueUne.removeAllElements();
+      afficheVueDeux.removeAllElements();
+      afficheVueTrois.removeAllElements();
+      mettreIcon = true;
+      this.remplissageModel(listModel);
+      for (int i = 0; i < listModel.size(); i++) {
+        afficheVueUne.addElement(vueDefault.get(i).getVue1());
+      }
+      this.remplissageVueDefault(afficheVueUne, vueDefault, "Un");
+      listeEleve.setFixedCellHeight(150);
+      listeEleve.setFixedCellWidth(180);
+      listeEleve.setLayoutOrientation(JList.VERTICAL_WRAP);
+      // listeEleve.setVisibleRowCount(4);
+    } else {
+      this.vueDefaut();
+    }
+    listeEleve.repaint();
+  }
+
+
+  public void vueDeux(ActionEvent event) {
+    if (vue2.isSelected()) {
+      vueDefault.removeAllElements();
+      afficheVueDefault.removeAllElements();
+      afficheVueUne.removeAllElements();
+      afficheVueDeux.removeAllElements();
+      afficheVueTrois.removeAllElements();
+      mettreIcon = true;
+      this.remplissageModel(listModel);
+      for (int i = 0; i < listModel.size(); i++) {
+        afficheVueDeux.addElement(vueDefault.get(i).getVue2());
+      }
+      this.remplissageVueDefault(afficheVueDeux, vueDefault, "Deux");
+      listeEleve.setFixedCellHeight(100);
+      listeEleve.setLayoutOrientation(JList.VERTICAL);
+    } else {
+      this.vueDefaut();
+    }
+    listeEleve.repaint();
+  }
+
+  public void vueTrois(ActionEvent event) {
+    if (vue3.isSelected()) {
+      vueDefault.removeAllElements();
+      afficheVueDefault.removeAllElements();
+      afficheVueUne.removeAllElements();
+      afficheVueDeux.removeAllElements();
+      afficheVueTrois.removeAllElements();
+      mettreIcon = false;
+      this.remplissageModel(listModel);
+      for (int i = 0; i < listModel.size(); i++) {
+        afficheVueTrois.addElement(vueDefault.get(i).getVue3());
+      }
+      this.remplissageVueDefault(afficheVueTrois, vueDefault, "Trois");
+      listeEleve.setFixedCellHeight(50);
+      listeEleve.setLayoutOrientation(JList.VERTICAL);
+    } else {
+      this.vueDefaut();
+      mettreIcon = true;
+    }
+    listeEleve.repaint();
+  }
+
+  public void setFenetre(Fenetre fenetre) {
+    this.fenetre = fenetre;
+  }
+
+  public class SelectedListCellRenderer extends DefaultListCellRenderer {
+
+    private static final long serialVersionUID = 1L;
+    ImageIcon icon;
+
+    public SelectedListCellRenderer() {
+      try {
+        this.icon = new ImageIcon("ressource/test.png");
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+        boolean isSelected, boolean cellHasFocus) {
+      Component c =
+          super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+      if (retardList.contains(vueDefault.getElementAt(index).getNomEleve())) {
+        c.setBackground(retard);
+        c.setForeground(Color.black);
+      } else if (absenceList.contains(vueDefault.getElementAt(index).getNomEleve())) {
+        c.setBackground(absence);
+        c.setForeground(Color.darkGray);
+      } else if (normalList.contains(vueDefault.getElementAt(index).getNomEleve())) {
+        c.setBackground(normal);
+        c.setForeground(Color.WHITE);
+      }
+      if (mettreIcon) {
+        setIcon(icon);
+      }
+      return c;
+    }
+  }
+
+  public void sortByLate(EtudiantID[] array) {
+    Arrays.sort(array, new Comparator<EtudiantID>() {
+      public int compare(EtudiantID idx1, EtudiantID idx2) {
+        if (idx1.getStatus() == "Absent") {
+          if (idx2.getStatus() != "Absent") {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+        if (idx1.getStatus() == "Retard") {
+          if (idx2.getStatus() == "Absent") {
+            return -1;
+          } else if (idx2.getStatus() == "Retard") {
+            return 0;
+          } else {
+            return -1;
+          }
+        }
+        return 0;
+      }
+    });
+  }
+
+  public EtudiantID[] search(String debut, EtudiantID[] array) {
+    EtudiantID[] ans = new EtudiantID[startWith(debut, array)];
+    int idx = 0;
+    for (EtudiantID etudiantID : array) {
+      if (etudiantID.getNomEleve().substring(0, debut.length()).toLowerCase().compareTo(debut) == 0) {
+        ans[idx++] = etudiantID;
+      }
+    }
+    sortByLate(ans);
+    return ans;
+  }
+
+  private int startWith(String debut, EtudiantID[] array) {
+    int idx = 0;
+    for (EtudiantID etudiantID : array) {
+      if (etudiantID.getNomEleve().substring(0, debut.length()).toLowerCase().compareTo(debut) == 0) {
+        idx++;
+      }
+    }
+    return idx;
+  }
+
+  public void setStatus(String status, int index) {
+    for (int i = 0; i < listModel.size(); i++) {
+      if (listModel.getElementAt(i).getNomEleve().equals(vueDefault.get(index).getNomEleve())) {
+        listModel.getElementAt(i).setStatus(status);
+      }
+    }
+  }
+
+}

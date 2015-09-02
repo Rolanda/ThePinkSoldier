@@ -1,0 +1,34 @@
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+
+public class Annee {
+	Set<String> annee;
+	//String[] mois;
+	
+	public Annee() {
+		this.annee = new HashSet<String>();
+	}
+	public Annee(String[] mois){
+		this.annee = new HashSet<String>();
+		this.mois = mois;
+		for (int i = 0; i < mois.length; i++) {
+			this.annee.add(mois[i]);
+		}
+	}
+	
+	public void union(Annee a){
+		
+	}
+	
+	public String toString(){
+		String res = "";
+		Iterator<String> it = annee.iterator();
+		while (it.hasNext()) {
+			res += it.next() + " ";	
+		}//this.annee.add(a.mois));
+		return "Il y a : "+this.annee.size() +", mois, qui sont : "+res;
+	}
+	
+}

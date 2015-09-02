@@ -1,0 +1,10 @@
+
+public class EssaieTemps {
+	public static void main(String[] args) {
+		Temps tmp = new Temps(10,25,55);
+		System.out.println(tmp);
+		tmp.add(new Temps(4,34,45));
+		System.out.println(tmp);
+		System.out.println(tmp.compareTo(new Temps(11,34,45)));
+	}
+}

@@ -1,0 +1,10 @@
+
+public class EssaiDico {
+
+	public static void main(String[] args) {
+		System.out.println(new Dictionnaire(new String[]{"un","deux","trois"},
+				new String[]{"one","two","three"}));
+
+	}
+
+}

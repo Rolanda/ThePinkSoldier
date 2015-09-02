@@ -1,0 +1,14 @@
+
+public class EssaiDico {
+
+	public static void main(String[] args) {
+		String[] fr = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi",
+				"Vendredi","Samedi","Dimanche"};
+		String[] eng = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday",
+						"Friday","Sunday","Saturday"};
+		Dictionnaire dico = new Dictionnaire(fr, eng);
+		System.out.println(dico);
+
+	}
+
+}

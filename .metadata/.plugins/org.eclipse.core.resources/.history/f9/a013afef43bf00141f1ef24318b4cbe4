@@ -1,0 +1,19 @@
+
+public class Multiplication<T> {
+		T multi1;
+		T multi2;
+		
+		public Multiplication(T multi1, T multi2) {
+			this.multi1 = multi1;
+			this.multi2 = multi2;
+		}
+		
+		public Integer calculabiliterDesDeuxMultiplication(){
+			Integer tmp = (Integer)this.multi1 * (Integer)this.multi2;
+			return tmp;
+		}
+		
+		public String toString(){
+			return this.multi1 + " * " + this.multi2 + " = " + calculabiliterDesDeuxMultiplication();
+		}
+	}

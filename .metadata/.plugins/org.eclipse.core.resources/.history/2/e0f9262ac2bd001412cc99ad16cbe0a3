@@ -1,0 +1,9 @@
+import java.util.Map;
+
+
+public class Etape {
+	Map<String, Temps> coureur;
+	public Etape(){
+		coureur = new HasMap<String, Temps>();
+	}
+}

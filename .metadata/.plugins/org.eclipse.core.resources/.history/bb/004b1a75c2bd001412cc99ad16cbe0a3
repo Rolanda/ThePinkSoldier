@@ -1,0 +1,15 @@
+import java.util.Map;
+import java.util.HashMap;
+
+public class Etape {
+	Map<String, Temps> coureur;
+	public Etape(){
+		coureur = new HashMap<String, Temps>();
+	}
+	
+	public Etape(String[] coureur, Temps[] temps){
+		for (int i = 0; i < coureur.length; i++) {
+			
+		}
+	}
+}

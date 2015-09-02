@@ -1,0 +1,61 @@
+
+public class Plateau {
+	private int taille;
+	Character[][] table = new Character(taille][taille];
+	boolean[][] tableBis = new boolean[taille][taille];
+	private int indice = 1;
+	
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + Arrays.hashCode(table);
+//		return result;
+//	}
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Plateau other = (Plateau) obj;
+//		if (!Arrays.deepEquals(table, other.table))
+//			return false;
+//		return true;
+//	}
+
+	public Plateau(int taille, Character table, boolean tableBis, int indice) {
+		this.taille = taille;
+		char[][] test = new char[taille][taille];
+		for (int i = 0; i < taille; i++) {
+			for (int j = 0; j < taille; j++) {
+				test[j][i] = table;
+				this.table[j][i] = test[j][i];
+				if(this.table[j][i] == table){
+					this.tableBis[j][i] = tableBis;
+				}
+				else {
+					this.tableBis[j][i] = true;
+				}
+			}
+		}
+		this.indice = indice;
+	}
+	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		String res = "";
+		for (int i = 0; i < this.taille; i++) {
+			for (int j = 0; j < this.taille; j++) {
+				res += this.table[j][i];
+			}
+			res += "\n";
+		}
+		return res;
+	}
+	
+}

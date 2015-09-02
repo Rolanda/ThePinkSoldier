@@ -1,0 +1,10 @@
+
+public class Plateau {
+	int[][] table;
+	boolean[][] tableBis;
+	int indice;
+	
+	public Plateau(int[][] table, boolean[][] tableBis, int indice) {
+		// TODO Auto-generated constructor stub
+	}
+}

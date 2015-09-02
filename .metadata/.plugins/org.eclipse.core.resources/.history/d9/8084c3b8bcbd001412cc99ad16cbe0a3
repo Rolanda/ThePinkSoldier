@@ -1,0 +1,12 @@
+
+public class EssaiAnnee {
+
+	public static void main(String[] args) {
+		String[] mois = new String[]{"Janvier","Février","Mars","Avril","Mai","Juin",
+				"Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"};
+		Annee test = new Annee();
+		System.out.println(test);
+
+	}
+
+}

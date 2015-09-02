@@ -1,0 +1,13 @@
+import java.util.HashSet;
+import java.util.Set;
+
+
+public class Annee {
+	Set<String> annee = new HashSet<String>();
+	
+	public Annee() {
+		String[] mois = new String[]{"Janvier","Février","Mars","Avril","Mai","Juin",
+				"Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"};
+	}
+	
+}

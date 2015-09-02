@@ -1,0 +1,13 @@
+
+public class Synonymes {
+	
+	Dictionnaire dicoSynonymes = new Dictionnaire();
+	
+	public void ajouterSynonymes(String mot, String[] synonymes){
+		for (int i = 0; i < synonymes.length; i++) {
+			if (!synonymes[i].equals(mot)) {
+				
+			}
+		}
+	}
+}

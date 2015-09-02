@@ -1,0 +1,16 @@
+
+public class Temps implements Comparable<Temps>{
+	int h;
+	int m;
+	int s;
+	
+	public Temps(int h, int m, int s) {
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public int compareTo(Temps arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

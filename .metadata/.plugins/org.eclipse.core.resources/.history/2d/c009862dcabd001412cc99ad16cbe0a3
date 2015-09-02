@@ -1,0 +1,23 @@
+import java.io.ObjectInputStream.GetField;
+
+
+public class EssaiDico {
+
+	public static void main(String[] args) {
+		String[] fr = new String[]{"Lundi", "Mardi", "Mercredi", "Jeudi",
+				"Vendredi","Samedi",/*"Dimanche"*/};
+		String[] eng = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday",
+						"Friday","Saturday",/*"Sunday"*/};
+		Dictionnaire dico = new Dictionnaire(fr, eng);
+		System.out.println(dico);
+		dico.ajouter("Dimanche","Sunday");
+		System.out.println(dico);
+		dico.retirer("Dimanche");
+		System.out.println(dico);
+		System.out.println(dico.traduireGb("Lundi"));
+		System.out.println(dico.getMotFrancais());
+		System.out.println(dico.getMotAnglais());
+		System.out.println(dico.getTraductions()());
+	}
+
+}

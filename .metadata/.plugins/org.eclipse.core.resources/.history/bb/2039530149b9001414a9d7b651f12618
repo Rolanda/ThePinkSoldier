@@ -1,0 +1,6 @@
+
+public class Plateau {
+	int[][] table;
+	boolean[][] tableBIs;
+	int indice;
+}

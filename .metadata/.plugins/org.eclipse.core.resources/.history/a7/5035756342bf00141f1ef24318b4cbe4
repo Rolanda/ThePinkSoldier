@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+
+public class Calculatrice {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int somme1;
+		int somme2;
+		System.out.println("Entrer une somme : ");
+		
+		Somme<Integer> calc = new Somme<Integer>(null, null);
+		try {
+			System.out.println(calc.toString());
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		finally{
+			calc = new Somme<Integer>(10, 10);
+		}
+		System.out.println(calc.toString());
+	}
+
+}
