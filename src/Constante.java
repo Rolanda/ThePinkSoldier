@@ -12,6 +12,8 @@ public class Constante {
     public static final String ANSI_WHITE_BG = "\u001B[47m";
     public static final String ANSI_BG_DEFAULT_COLOR = "\u001B[49m";
 
+    
+    public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
