@@ -17,13 +17,13 @@ TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
 	public char representation(String nom){
 		if(nom.equals("rond")){
 			return '●';
-			this.couleur="BLEU"; // a remplacer par \033 blabla
+			this.couleur="\033[34m"; 
 		}else if(nom.equals("triangle")){
 			return '▲';
-			this.couleur = "VERT"; // a remplacer par \033 blabla
+			this.couleur = "\033[32m"; 
 		}else if(nom.equals("carre")){
 			return '■';
-			this.couleur = "ROUGE"; // a remplacer par \033 blabla
+			this.couleur = "\033[31m"; 
 		}
 		return '★';
 		
@@ -54,13 +54,13 @@ TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
 	}
 	
 	public String toString(){
-		return image;
+		return ""+image;
 	}
 	public boolean equals(Forme f){
 		if(this.nom.equals(f.nom)){
 			return true;
 		}
-		return false
+		return false;
 	}
 
 }
