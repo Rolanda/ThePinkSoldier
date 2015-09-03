@@ -6,17 +6,24 @@ public class Plateau {
 	private int x;
 	private int y;
 	private Forme[][] grille;
+	private int[][] aide;
 	private String[] nom = new String[]{"ROND","TRIANGLE", "CARRE" };
 	
 	public Plateau(int x, int y) {
 		this.x = x;
 		this.y = y;
 		grille = new Forme[x][y];
+		aide = new int[x][y];
 		Random rd = new Random();
 		for (int i = 0; i < this.x; i++) {
 			for (int j = 0; j < this.y; j++) {
 				int random = rd.nextInt(nom.length);
 				grille[i][j] =  new Forme(nom[random].toLowerCase(), i, j);
+			}
+		}
+		for (int i = 0; i < this.x; i++) {
+			for (int j = 0; j < this.y; j++) {
+				aide[i][j] = i*x+j;
 			}
 		}
 	}
