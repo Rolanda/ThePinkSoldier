@@ -15,6 +15,10 @@ public class Plateau {
             for(int j = 0 ; j < grille[i].length ; j++)
                 if(!tmp[i][j].equals(grille[i][j]))
                     return false;
+        Forme formeTmp = forme1;
+        grille[forme1.getX()][forme1.getY()] = forme2;
+        grille[forme2.getX()][forme2.getY()] = forme1;
+        
         return true;
         
         
@@ -37,6 +41,7 @@ public class Plateau {
                         }
                     } catch (Exception e) {}
                 }
+                chaine = 0;
                 for(int k = 1 ; k < 5 ; k++){
                     try {
                         if(grille[i][j].equals(grille[i+k][j]))
