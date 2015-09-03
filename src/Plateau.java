@@ -103,15 +103,31 @@ public class Plateau {
 	}
 	
 	 public String toString() {
-		    String ans= quadrillage() + "\n|";
+		
+		 	String ans ="  ";
+		 	char lettre = 'a';
+		 	int chiffre = 1;
+		 	for(int i=0; i<grille.length;i++){
+		 		ans+="|" +lettre;
+		 		lettre++;
+		 	}
+		 	if(chiffre<10){
+		 		ans+= "|\n──"+quadrillage() + "\n " + chiffre + "|";
+		 	}
+		 	else ans+= "|\n──"+quadrillage() + "\n" + chiffre + "|";
 		    for (int i = 0; i < grille.length; i++) {
+		    	chiffre++;
 		      for (int j = 0; j < grille[0].length; j++) {
 			    	  ans += grille[i][j]+"|";
 		      }if(i < grille.length - 1) {
-		        ans += "\n"+quadrillage()+"\n|";
+		    	  
+		    	  if(chiffre<10){
+				 		ans+= "\n──"+quadrillage() + "\n " + chiffre + "|";
+				 	}
+				 	else ans+= "\n──"+quadrillage() + "\n" + chiffre + "|";
 		      }
 		    }
-		    return ans + "\n" + quadrillage();    
+		    return ans + "\n──" + quadrillage();    
 		  }
 		  
 		  private String quadrillage(){
