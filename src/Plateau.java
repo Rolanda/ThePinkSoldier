@@ -40,6 +40,26 @@ public class Plateau {
         return true;
 
     }
+    
+    
+    public boolean deplacer(int x1, int y1, int x2, int y2) {
+        
+        Forme[][] tmp = grille.clone();
+        destruction();
+        for (int i = 0; i < grille.length; i++) {
+            for (int j = 0; j < grille[i].length; j++) {
+                if (!tmp[i][j].equals(grille[i][j])) {
+                    return false;
+                }
+            }
+        }
+        Forme formeTmp = grille[x1][y1];
+        grille[x1][y1] = grille[x2][y2];
+        grille[x2][y2] = formeTmp;
+
+        return true;
+
+    }
 
     public boolean destruction() {
         boolean aAgit = false;
