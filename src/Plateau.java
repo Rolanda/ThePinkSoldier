@@ -5,7 +5,7 @@ public class Plateau {
     private int x;
     private int y;
     private Forme[][] grille;
-    private String[] nom = new String[]{"rond", "triangle", "carre"};
+    private String[] nom = new String[]{"rond", "triangle", "carre", "losange"};
 
     public Plateau(int x, int y) {
         this.x = x;
