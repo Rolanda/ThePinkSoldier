@@ -1,6 +1,5 @@
 
 public class Forme {
-//TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
 	
 	private char image;
 	private String nom = "";
@@ -16,13 +15,13 @@ public class Forme {
 	
 	public char representation(String nom){
 		if(nom.equals("rond")){
-			this.couleur="\033[34m"; 
+			this.couleur = Constante.ANSI_BLUE_BG;
 			return '●';
 		}else if(nom.equals("triangle")){
-			this.couleur = "\033[32m"; 
+			this.couleur = Constante.ANSI_GREEN_BG;
 			return '▲';
 		}else if(nom.equals("carre")){
-			this.couleur = "\033[31m"; 
+			this.couleur = Constante.ANSI_RED_BG;
 			return '■';
 		}
 		return '★';
@@ -31,6 +30,9 @@ public class Forme {
 	
 	public String getCouleur(){
 		return this.couleur;
+	}
+	public String getNom(){
+		return nom;
 	}
 	public void setCouleur(String s){
 		this.couleur=s;
@@ -64,3 +66,4 @@ public class Forme {
 	}
 
 }
+
