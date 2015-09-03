@@ -52,8 +52,20 @@ public class Menu {
 	}
 	
 	public void lancerJeu(){
-		PLateau p = new Plateau(5,5);
-		System.out.println(p);		
+		int x=-1;
+		do{
+			System.out.println("Choisissez la taille du plateau : (entre 5 et 15)");
+		try{
+			x = Integer.parseInt(sc.nextLine());
+			
+			if(x <5 && x >15){
+				x=-1;
+			}
+		}catch(Exception e){
+			
+		}
+		}while(x==-1);
+		new Partie(x);		
 	}
 	
 	public void enoncerRegles(){
@@ -99,7 +111,5 @@ public class Menu {
 		new Menu();
 	}
 	
-	
-	
-	
 }
+
