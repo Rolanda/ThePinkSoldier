@@ -2,18 +2,18 @@ import java.util.Random;
 
 public class Plateau {
 
-    private int x;
-    private int y;
+    private int largeur;
+    private int hauteur;
     private Forme[][] grille;
     private String[] nom = new String[]{"rond", "triangle", "carre", "losange"};
 
-    public Plateau(int x, int y) {
-        this.x = x;
-        this.y = y;
-        grille = new Forme[x][y];
+    public Plateau(int largeur, int hauteur) {
+        this.largeur = largeur;
+        this.hauteur = hauteur;
+        grille = new Forme[largeur][hauteur];
         Random rd = new Random();
-        for (int i = 0; i < this.x; i++) {
-            for (int j = 0; j < this.y; j++) {
+        for (int i = 0; i < this.largeur; i++) {
+            for (int j = 0; j < this.hauteur; j++) {
                 int random = rd.nextInt(nom.length);
                 grille[i][j] = new Forme(nom[random], i, j);
             }
@@ -41,7 +41,8 @@ public class Plateau {
 
     }
 
-    public void destruction() {
+    public boolean destruction() {
+        boolean aAgit = false;
         for (int i = 0; i < grille.length; i++) {
             for (int j = 0; j < grille[i].length; j++) {
                 int chaine = 0;
@@ -53,6 +54,7 @@ public class Plateau {
                             if (chaine >= 3) {
                                 for (int l = 0; l < chaine; l++) {
                                     grille[i][j + l] = new Forme("Vide", i, j + l);
+                                    aAgit= true;
                                 };
                             }
                             chaine = 0;
@@ -62,6 +64,7 @@ public class Plateau {
                         if (chaine >= 3) {
                             for (int l = 0; l < chaine; l++) {
                                 grille[i][j + l] = new Forme("Vide", i, j + l);
+                                aAgit= true;
                             };
                         }
                         chaine = 0;
@@ -77,6 +80,7 @@ public class Plateau {
                             if (chaine >= 3) {
                                 for (int l = 0; l < chaine; l++) {
                                     grille[i + l][j] = new Forme("Vide", i + l, j);
+                                    aAgit= true;
                                 };
                             }
                             chaine = 0;
@@ -86,6 +90,7 @@ public class Plateau {
                         if (chaine >= 3) {
                             for (int l = 0; l < chaine; l++) {
                                 grille[i + l][j] = new Forme("Vide", i + l, j);
+                                aAgit= true;
                             };
                         }
                         chaine = 0;
@@ -94,6 +99,7 @@ public class Plateau {
                 }
             }
         }
+        return aAgit;
     }
 
     public void glisser() {
@@ -126,11 +132,11 @@ public class Plateau {
     }
 
     public int getX() {
-        return x;
+        return largeur;
     }
 
     public int getY() {
-        return y;
+        return hauteur;
     }
 
     public String toString() {
