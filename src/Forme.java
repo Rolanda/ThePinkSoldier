@@ -10,6 +10,7 @@ TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
 		this.nom = nom;
 		this.y = y;
 		this.x = x;
+		this.image = representation(nom);
 	}
 	
 	public char representation(String nom){
@@ -38,6 +39,16 @@ TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
 	
 	public void setY(int y){
 		this.x = y;
+	}
+	
+	public String toString(){
+		return image;
+	}
+	public boolean equals(Forme f){
+		if(this.nom.equals(f.nom)){
+			return true;
+		}
+		return false
 	}
 
 }
