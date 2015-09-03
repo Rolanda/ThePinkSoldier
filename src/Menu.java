@@ -52,8 +52,8 @@ public class Menu {
 	}
 	
 	public void lancerJeu(){
-		Main.p = new Plateau(5,5);
-		System.out.println(Main.p);		
+		PLateau p = new Plateau(5,5);
+		System.out.println(p);		
 	}
 	
 	public void enoncerRegles(){
