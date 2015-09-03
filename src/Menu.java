@@ -55,8 +55,15 @@ public class Menu {
 	}
 	
 	public void lancerJeu(){
-		Plateau p = new Plateau(5,5);
-		System.out.println(p);
+	Plateau plateau = new Plateau(5, 5);
+		System.out.println(plateau.toString());
+		try {
+			Thread.sleep(100);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		plateau.destruction();
+		System.out.println(plateau.toString());
 	}
 	
 	public void enoncerRegles(){
