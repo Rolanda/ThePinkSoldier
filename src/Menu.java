@@ -30,40 +30,30 @@ public class Menu {
 			}
 		}while(!ok);
 		
-		System.out.print("Vous avez choisi : ");
 		if(choix ==1){
-			System.out.println("Jouer");
 			lancerJeu();
 		}
 		if(choix ==2){
-			System.out.println("Options");
+			afficherOptions();
 		}
 		if(choix ==3){
-			System.out.println("Scores");
+			afficherScores();
 		}
 		if(choix ==4){
-			System.out.println("Regles de jeu");
 			enoncerRegles();
 			
 			
 		}
 		if(choix ==5){
-			System.out.println("Quitter\nAu revoir !");
+			System.out.println("Au revoir !");
 			System.exit(0);
 		}
 		
 	}
 	
 	public void lancerJeu(){
-	Plateau plateau = new Plateau(5, 5);
-		System.out.println(plateau.toString());
-		try {
-			Thread.sleep(100);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		plateau.destruction();
-		System.out.println(plateau.toString());
+		Main.p = new Plateau(5,5);
+		System.out.println(Main.p);		
 	}
 	
 	public void enoncerRegles(){
@@ -81,6 +71,32 @@ public class Menu {
 			
 		}while(retour!= 1);
 			new Menu();
+	}
+	
+	public void afficherScores(){
+		System.out.println("Scores    ");
+		int retour =0;
+		do{
+			System.out.println("\n1: Retour");
+			try{
+				retour = Integer.parseInt(sc.nextLine());
+			}catch(Exception e){		
+			}
+		}while(retour!= 1);
+		new Menu();
+	}
+	public void afficherOptions(){
+		System.out.println("Options    ");
+
+		int retour =0;
+		do{
+			System.out.println("\n1: Retour");
+			try{
+				retour = Integer.parseInt(sc.nextLine());
+			}catch(Exception e){		
+			}
+		}while(retour!= 1);
+		new Menu();
 	}
 	
 	
