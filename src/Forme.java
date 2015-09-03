@@ -5,6 +5,7 @@ TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
 	private char image;
 	private String nom = "";
 	private int x,y;
+	private String couleur="";
 	
 	Forme(String nom , int x, int y ){
 		this.nom = nom;
@@ -16,18 +17,29 @@ TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
 	public char representation(String nom){
 		if(nom.equals("rond")){
 			return '●';
+			this.couleur="BLEU"; // a remplacer par \033 blabla
 		}else if(nom.equals("triangle")){
 			return '▲';
+			this.couleur = "VERT"; // a remplacer par \033 blabla
 		}else if(nom.equals("carre")){
 			return '■';
+			this.couleur = "ROUGE"; // a remplacer par \033 blabla
 		}
 		return '★';
 		
 	}
 	
+	public String getCouleur(){
+		return this.couleur;
+	}
+	public void setCouleur(String s){
+		this.couleur=s;
+	}
+	
 	public int getX(){
 		return this.x;
 	}
+	
 	
 	public int getY(){
 		return this.y;
