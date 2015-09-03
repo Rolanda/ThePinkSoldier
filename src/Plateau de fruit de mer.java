@@ -6,13 +6,19 @@ public class Plateau {
         this.grille = new Forme[largeur][hauteur];
     }
     
-//    public boolean deplacer(Forme forme1, Forme forme2){
-//        if(Math.abs(forme1.getX() - forme2.getX()) > 1 || Math.abs(forme1.getY() - forme2.getY()) > 1)
-//                return false;
-//        Forme[][] tmp = grille.clone();
-//        destruction();
-//        
-//    }
+    public boolean deplacer(Forme forme1, Forme forme2){
+        if(Math.abs(forme1.getX() - forme2.getX()) > 1 || Math.abs(forme1.getY() - forme2.getY()) > 1)
+                return false;
+        Forme[][] tmp = grille.clone();
+        destruction();
+        for(int i = 0 ; i < grille.length ; i++)
+            for(int j = 0 ; j < grille[i].length ; j++)
+                if(!tmp[i][j].equals(grille[i][j]))
+                    return false;
+        return true;
+        
+        
+    }
     
     public void destruction(){
         for(int i = 0 ; i < grille.length ; i++){
