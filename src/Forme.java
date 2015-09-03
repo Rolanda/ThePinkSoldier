@@ -1,4 +1,3 @@
-
 public class Forme {
 	
 	private char image;
@@ -15,13 +14,13 @@ public class Forme {
 	
 	public char representation(String nom){
 		if(nom.equals("rond")){
-			this.couleur = Constante.ANSI_BLUE_BG;
+			this.couleur = Constante.ANSI_BLUE;
 			return '●';
 		}else if(nom.equals("triangle")){
-			this.couleur = Constante.ANSI_GREEN_BG;
+			this.couleur = Constante.ANSI_GREEN;
 			return '▲';
 		}else if(nom.equals("carre")){
-			this.couleur = Constante.ANSI_RED_BG;
+			this.couleur = Constante.ANSI_RED;
 			return '■';
 		}
 		return '★';
@@ -66,4 +65,3 @@ public class Forme {
 	}
 
 }
-
