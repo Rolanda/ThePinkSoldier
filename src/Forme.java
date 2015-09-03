@@ -1,6 +1,6 @@
 
-public enum Forme {
-TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
+public class Forme {
+//TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
 	
 	private char image;
 	private String nom = "";
