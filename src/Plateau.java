@@ -121,43 +121,54 @@ public class Plateau {
                     }
                 }
             }
-        }while (!done);
+        } while (!done);
+        destruction();
     }
 
-	public int getX() {
-		return x;
-	}
+    public int getX() {
+        return x;
+    }
 
-	public int getY() {
-		return y;
-	}
-	
- public String toString() {
-		
-		 String ans ="  ";
-		 char lettre = 'a';
-		 int chiffre = 1;
-		 for(int i=0; i<grille.length;i++){
-		 	ans+="|" +lettre;
-		 	lettre++;
-		}
-		 if(chiffre<10) ans+= "|\n──"+quadrillage() + "\n " + chiffre + "|";
-		 else ans+= "|\n──"+quadrillage() + "\n" + chiffre + "|";
-		
-		 for (int i = 0; i < grille.length; i++) {
-		    chiffre++;
-		    for (int j = 0; j < grille[0].length; j++) ans += grille[i][j]+"|";
-		    if(i < grille.length - 1) {
-		    	if(chiffre<10) ans+= "\n──"+quadrillage() + "\n " + chiffre + "|";
-		    	else ans+= "\n──"+quadrillage() + "\n" + chiffre + "|";
-		    }
-		 }
-		 return ans + "\n──" + quadrillage();    
-	 }
-		  
-	 private String quadrillage(){
-		 String ans = "+";
-		 for (int i = 0; i < grille[0].length ; i++) ans += "─+";
-		 return ans;
-	 }
+    public int getY() {
+        return y;
+    }
+
+    public String toString() {
+
+        String ans = "  ";
+        char lettre = 'a';
+        int chiffre = 1;
+        for (int i = 0; i < grille.length; i++) {
+            ans += "|" + lettre;
+            lettre++;
+        }
+        if (chiffre < 10) {
+            ans += "|\n──" + quadrillage() + "\n " + chiffre + "|";
+        } else {
+            ans += "|\n──" + quadrillage() + "\n" + chiffre + "|";
+        }
+
+        for (int i = 0; i < grille.length; i++) {
+            chiffre++;
+            for (int j = 0; j < grille[0].length; j++) {
+                ans += grille[i][j].getCouleur() + grille[i][j] + Constante.ANSI_RESET + "|";
+            }
+            if (i < grille.length - 1) {
+                if (chiffre < 10) {
+                    ans += "\n──" + quadrillage() + "\n " + chiffre + "|";
+                } else {
+                    ans += "\n──" + quadrillage() + "\n" + chiffre + "|";
+                }
+            }
+        }
+        return ans + "\n──" + quadrillage();
+    }
+
+    private String quadrillage() {
+        String ans = "+";
+        for (int i = 0; i < grille[0].length; i++) {
+            ans += "─+";
+        }
+        return ans;
+    }
 }
