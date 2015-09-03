@@ -16,14 +16,14 @@ TRIANGLE("triangle",-1,-1), CARRE("carre",-1,-1), ROND("rond",-1,-1);
 	
 	public char representation(String nom){
 		if(nom.equals("rond")){
-			return '●';
 			this.couleur="\033[34m"; 
+			return '●';
 		}else if(nom.equals("triangle")){
-			return '▲';
 			this.couleur = "\033[32m"; 
+			return '▲';
 		}else if(nom.equals("carre")){
-			return '■';
 			this.couleur = "\033[31m"; 
+			return '■';
 		}
 		return '★';
 		
