@@ -22,6 +22,9 @@ public class Forme {
 		}else if(nom.equals("carre")){
 			this.couleur = Constante.ANSI_RED;
 			return '■';
+		}else if(nom.equals("losange")){
+			this.couleur = Constante.ANSI_PURPLE;
+			return '♦';
 		}
 		return '★';
 		
