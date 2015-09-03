@@ -87,19 +87,25 @@ public class Plateau {
 	
 	public String toString(){
 		String result = "";
-		for (int i = 0; i < (this.y*2)+1; i++) {
-			result += "+";
+		for (int i = 0; i < (this.y*2)+4; i++) {
+			result += "++";
 		}
 		result += "\n";
 		for(int i = 0; i < this.x; i++){
 			result += "+";
-			for(int j = 0; j < this.y; j++)
+			for(int j = 0; j < this.y; j++){
 				result += this.grille[i][j] +"+";
-			result += "\n";
+				
+			}
+			int a = i*x+x;
+			result+=" + "+i*x+" à "+a;
+			
+			result += "+\n";
 		}
-		for (int i = 0; i < (this.y*2)+1; i++) {
-			result += "+";
+		for (int i = 0; i < (this.y*2)+4; i++) {
+			result += "++";
 		}
+		
 		return result;
 	}
 	
