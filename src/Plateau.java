@@ -62,9 +62,27 @@ public class GamePanel extends JPanel implements MouseListener{
                         g.fillPolygon(new int[]{j*getWidth()/plateau.getX()+5, j*getWidth()/plateau.getX()+35, j*getWidth()/plateau.getX()+65, j*getWidth()/plateau.getX()+35}, new int[]{i*getHeight()/plateau.getY()+27, i*getHeight()/plateau.getY(), i*getHeight()/plateau.getY()+27, i*getHeight()/plateau.getY()+55}, 4);
                         break;
                     case "Vide":
-                        g.setColor(Color.WHITE);
-                        g.fillOval(j*getWidth()/plateau.getX(), i*getHeight()/plateau.getY(), getWidth()/plateau.getX(), getHeight()/plateau.getY());
                         
+
+                    int [] x = new int[]{70,45,35,25,0,15,0,15,0,25,35,45,70,55,70,55};
+                    
+                    for(int i=0; i<x.length();i++){
+                    
+                    	x[i]+=j.getX()*getWidth()/plateau.getX();
+                    }
+                    
+                    int [] y = new int[]{70,55,70,55,70,45,35,25,0,15,0,15,0,25,35,45};
+                    
+                    
+                    for(int i=0; i<x.length();i++){
+                    
+                    	y[i]+=j.getY()*getHeight()/plateau.getY();
+                    }
+                    
+                    
+                    g.fillPolygon(x,y, 16);
+                                            
+                    break;
                 }
             }
         }
