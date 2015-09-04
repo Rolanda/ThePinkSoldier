@@ -216,6 +216,10 @@ public class Plateau {
     public int getY() {
         return hauteur;
     }
+    
+    public Forme[][] getGrille(){
+        return this.grille;
+    }
 
     public String toString() {
         System.out.print("\033[H\033[2J");
