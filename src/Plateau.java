@@ -3,260 +3,120 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package thepinksoldier;
+
+package GUI;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import thepinksoldier.Forme;
+import thepinksoldier.Plateau;
 
 /**
  *
  * @author lopezb
  */
-import java.util.Random;
-
-public class Plateau {
-
-    private int largeur;
-    private int hauteur;
-    private Forme[][] grille;
-    private String[] nom = new String[]{"rond", "triangle", "carre", "losange"};
-
-    public Plateau(int largeur, int hauteur) {
-        this.largeur = largeur;
-        this.hauteur = hauteur;
-        grille = new Forme[largeur][hauteur];
-        Random rd = new Random();
-        for (int i = 0; i < this.largeur; i++) {
-            for (int j = 0; j < this.hauteur; j++) {
-                int random = rd.nextInt(nom.length);
-                grille[i][j] = new Forme(nom[random], i, j);
-            }
-        }
-    }
-
-    public boolean deplacer(Forme forme1, Forme forme2) {
-//        if (Math.abs(forme1.getX() - forme2.getX()) > 1 || Math.abs(forme1.getY() - forme2.getY()) > 1) {
-//            return false;
-//        }
-        Forme[][] tmp = grille.clone();
-        destruction();
-        for (int i = 0; i < grille.length; i++) {
-            for (int j = 0; j < grille[i].length; j++) {
-                if (!tmp[i][j].equals(grille[i][j])) {
-                    return false;
-                }
-            }
-        }
-        Forme formeTmp = forme1;
-        grille[forme1.getX()][forme1.getY()] = forme2;
-        grille[forme2.getX()][forme2.getY()] = forme1;
-
-        return true;
-
-    }
-
-    public boolean deplacer(int x1, int y1, int x2, int y2) {
-
-        Forme[][] tmp = grille.clone();
-        destruction();
-        for (int i = 0; i < grille.length; i++) {
-            for (int j = 0; j < grille[i].length; j++) {
-                if (!tmp[i][j].equals(grille[i][j])) {
-                    return false;
-                }
-            }
-        }
-        Forme formeTmp = grille[x1][y1];
-        grille[x1][y1] = grille[x2][y2];
-        grille[x2][y2] = formeTmp;
-
-        return true;
-
-    }
-
-    public boolean destruction() {
-        boolean aAgit = false;
-        for (int i = 0; i < grille.length; i++) {
-            for (int j = 0; j < grille[i].length; j++) {
-                int chaine = 0;
-                for (int k = 0; k < 5; k++) {
-                    //try{
-                    if (j + k < grille[i].length) {
-                        if (grille[i][j].equals(grille[i][j + k])) {
-                            chaine++;
-                        } else {
-                            if (chaine >= 3) {
-                                for (int l = 0; l < chaine; l++) {
-                                    grille[i][j + l] = new Forme("Vide", i, j + l);
-                                }
-//                                supprimerLigne(i, i, j, j+chaine);
-                                aAgit = true;
-                                if (Constante.score >= 0) {
-                                    Constante.addPoints(chaine);
-                                }
-                            }
-                            chaine = 0;
-                            break;
-                        }
-                    } else {
-                        if (chaine >= 3) {
-                            for (int l = 0; l < chaine; l++) {
-                                grille[i][j + l] = new Forme("Vide", i, j + l);
-                            }
-//                                supprimerLigne(i, i, j, j+chaine);
-                            aAgit = true;
-                            if (Constante.score >= 0) {
-                                Constante.addPoints(chaine);
-                            }
-                        }
-                        break;
-                    }
-//                    } catch (Exception e) {
-//                        if (chaine >= 3) {
-//                            for (int l = 0; l < chaine; l++) 
-//                                grille[i][j + l] = new Forme("Vide", i, j + l);
-////                            supprimerLigne(i, i, j, j+chaine);
-//                            aAgit= true;
-//                        }
-//                        chaine = 0;
-//                        break;
-//                    }
-                }
-                chaine = 0;
-                for (int k = 0; k < 5; k++) {
-                    //try {
-                    if (i + k < grille.length) {
-                        if (grille[i][j].equals(grille[i + k][j])) {
-                            chaine++;
-                        } else {
-                            if (chaine >= 3) {
-                                for (int l = 0; l < chaine; l++) {
-                                    grille[i + l][j] = new Forme("Vide", i + l, j);
-                                }
-//                                supprimerLigne(i, i + chaine, j, j);
-                                aAgit = true;
-                                if (Constante.score >= 0) {
-                                    Constante.addPoints(chaine);
-                                }
-                            }
-                            chaine = 0;
-                            break;
-                        }
-                    } else {
-                        if (chaine >= 3) {
-                            for (int l = 0; l < chaine; l++) {
-                                grille[i][j + l] = new Forme("Vide", i, j + l);
-                            }
-//                                supprimerLigne(i, i, j, j+chaine);
-                            aAgit = true;
-                            chaine = 0;
-                            if (Constante.score >= 0) {
-                                Constante.addPoints(chaine);
-                            }
-                        }
-                        break;
-                    }
-//                    } catch (Exception e) {
-//                        if (chaine >= 3) {
-//                            for (int l = 0; l < chaine; l++)
-//                                grille[i + l][j] = new Forme("Vide", i + l, j);
-////                                aAgit= true;
-//////                            };
-////                            supprimerLigne(i, i + chaine, j, j);
-//                            aAgit= true;
-//                        }
-//                        chaine = 0;
-//                        break;
-//                    }
-                }
-            }
-        }
-        return aAgit;
-    }
-
-    public void supprimerLigne(int x1, int y1, int x2, int y2) {
-//        for(int i = x1 ; i < x2 ; i++)
-//            for(int j = y1 ; j < y2 ; j++)
-//                grille[i][j] = new Forme("Vide", i, j);
-        if (Constante.score >= 0) {
-            Constante.addPoints(Math.abs(x1 - x2) + Math.abs(y1 - y2));
-        }
-
-    }
-
-    public void glisser() {
-        boolean done;
+public class GamePanel extends JPanel implements MouseListener{
+    
+    private Plateau plateau;
+    private Forme[] clics;
+    
+    public GamePanel(){
+        setFocusable(true);
+        addMouseListener(this);
+        setBackground(Color.BLACK);
+        this.plateau = new Plateau(10,10);
         do {
-            done = true;
-            for (Forme[] i : grille) {
-                for (Forme j : i) {
-                    if (j.getNom().equals("Vide")) {
-                        done = false;
-                    }
-                }
-            }
-            for (int i = this.grille.length - 1; i >= 0; i--) {
-                for (int j = this.grille[i].length - 1; j >= 0; j--) {
-                    if (this.grille[i][j].getNom().equals("Vide")) {
-                        if (i > 0) {
-                            this.grille[i][j] = this.grille[i - 1][j];
-                            this.grille[i - 1][j] = new Forme("Vide", i, j);
-                        } else {
-                            Random rand = new Random();
-                            int random = rand.nextInt(nom.length);
-                            grille[i][j] = new Forme(nom[random], i, j);
-                        }
-                    }
-                }
-            }
-        } while (!done);
+            plateau.glisser();
+        } while (plateau.destruction());
+        this.clics = new Forme[2];
     }
 
-    public int getX() {
-        return largeur;
-    }
-
-    public int getY() {
-        return hauteur;
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
+//        for(Forme[] i : plateau.getGrille())
+//            for(Forme j : i){
+        for(int i = 0 ; i < plateau.getGrille().length ; i++){
+            for(int j = 0 ; j < plateau.getGrille()[i].length ; j++){
+                g.setColor(plateau.getGrille()[i][j].getGraphiqueColor());
+                //g.fillOval(j.getX()*getWidth()/plateau.getX(), j.getY()*getHeight()/plateau.getY(), getWidth()/plateau.getX(), getHeight()/plateau.getY());
+                switch(plateau.getGrille()[i][j].getNom()){
+                    case "rond":
+                        g.fillOval(j*getWidth()/plateau.getX(), i*getHeight()/plateau.getY(), getWidth()/plateau.getX(), getHeight()/plateau.getY());
+                        break;
+                    case "carre":
+                        g.fillRect(j*getWidth()/plateau.getX(), i*getHeight()/plateau.getY(), getWidth()/plateau.getX(), getHeight()/plateau.getY());
+                        break;
+                    case "triangle":
+                        g.fillPolygon(new int[]{j*getWidth()/plateau.getX()+70, j*getWidth()/plateau.getX()+35, j*getWidth()/plateau.getX()}, new int[]{i*getHeight()/plateau.getY()+55, i*getHeight()/plateau.getY(), i*getHeight()/plateau.getY()+55}, 3);
+                        break;
+                    case "losange":
+                        g.fillPolygon(new int[]{j*getWidth()/plateau.getX()+5, j*getWidth()/plateau.getX()+35, j*getWidth()/plateau.getX()+65, j*getWidth()/plateau.getX()+35}, new int[]{i*getHeight()/plateau.getY()+27, i*getHeight()/plateau.getY(), i*getHeight()/plateau.getY()+27, i*getHeight()/plateau.getY()+55}, 4);
+                        break;
+                    case "Vide":
+                        g.setColor(Color.WHITE);
+                        g.fillOval(j*getWidth()/plateau.getX(), i*getHeight()/plateau.getY(), getWidth()/plateau.getX(), getHeight()/plateau.getY());
+                        
+                }
+            }
+        }
     }
     
-    public Forme[][] getGrille(){
-        return this.grille;
+    public void choixClic(int x, int y){
+        if(clics[0] == null){
+            clics[0] = plateau.getGrille()[y/(getHeight()/plateau.getY())][x/(getWidth()/plateau.getX())];
+            //plateau.destruction();
+            //repaint();
+        }else  {
+            clics[1] = plateau.getGrille()[y/(getHeight()/plateau.getY())][x/(getWidth()/plateau.getX())];
+            plateau.deplacer(clics[0], clics[1]);
+            plateau.destruction();
+            //plateau.glisser();
+            //repaint();
+            clics[0] = null;
+            clics[1] = null;
+            repaint();
+        }
+    }
+    
+    
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public String toString() {
-        System.out.print("\033[H\033[2J");
-        String ans = "  ";
-        char lettre = 'a';
-        int chiffre = 1;
-        for (int i = 0; i < grille.length; i++) {
-            ans += "|" + lettre;
-            lettre++;
-        }
-        if (chiffre < 10) {
-            ans += "|\n──" + quadrillage() + "\n " + chiffre + "|";
-        } else {
-            ans += "|\n──" + quadrillage() + "\n" + chiffre + "|";
-        }
-
-        for (int i = 0; i < grille.length; i++) {
-            chiffre++;
-            for (int j = 0; j < grille[0].length; j++) {
-                ans += grille[i][j].getCouleur() + grille[i][j] + Constante.ANSI_RESET + "|";
-            }
-            if (i < grille.length - 1) {
-                if (chiffre < 10) {
-                    ans += "\n──" + quadrillage() + "\n " + chiffre + "|";
-                } else {
-                    ans += "\n──" + quadrillage() + "\n" + chiffre + "|";
-                }
-            }
-        }
-        return ans + "\n──" + quadrillage();
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private String quadrillage() {
-        String ans = "+";
-        for (int i = 0; i < grille[0].length; i++) {
-            ans += "─+";
-        }
-        return ans;
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        System.out.println(e.getX()/(getWidth()/plateau.getX()) + "\t" + e.getY()/(getHeight()/plateau.getY()));
+        choixClic(e.getX(), e.getY());
+        System.out.println(e.getX() + "\t" + e.getY());
+        //System.out.println(e.getX()/getWidth()/plateau.getX());
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 }
