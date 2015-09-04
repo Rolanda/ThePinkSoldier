@@ -47,7 +47,7 @@ public class Plateau {
                 }
             }
         }
-        if(Math.abs(x1 - x2) <= 1 && Math.abs(y1 - y2) <= 1 && ((x1 == x2 && y1 != y2) || (x1 != x2 && y1 == y2)))
+        if(!(Math.abs(x1 - x2) <= 1 && Math.abs(y1 - y2) <= 1 && ((x1 == x2 && y1 != y2) || (x1 != x2 && y1 == y2))))
             return false;
 //        Forme[][] tmp = grille.clone();
 //        destruction();
