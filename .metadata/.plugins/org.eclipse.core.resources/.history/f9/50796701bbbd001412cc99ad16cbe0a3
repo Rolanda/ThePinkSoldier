@@ -1,9 +1,0 @@
-
-public class EssaiAnnee {
-
-	public static void main(String[] args) {
-		Annee test = new Annee();
-
-	}
-
-}

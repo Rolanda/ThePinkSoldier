@@ -1,9 +1,0 @@
-
-public class Calculatrice {
-
-	public static void main(String[] args) {
-		Somme<Integer> calc = new Somme<Integer>(null, null);
-		System.out.println(calc.toString());
-	}
-
-}
