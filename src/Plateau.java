@@ -66,17 +66,17 @@ public class GamePanel extends JPanel implements MouseListener{
 
                     int [] x = new int[]{70,45,35,25,0,15,0,15,0,25,35,45,70,55,70,55};
                     
-                    for(int i=0; i<x.length();i++){
+                    for(int k=0; k<x.length();k++){
                     
-                    	x[i]+=j.getX()*getWidth()/plateau.getX();
+                    	x[k]+=j.getX()*getWidth()/plateau.getX();
                     }
                     
                     int [] y = new int[]{70,55,70,55,70,45,35,25,0,15,0,15,0,25,35,45};
                     
                     
-                    for(int i=0; i<x.length();i++){
+                    for(int l=0; l<x.length();l++){
                     
-                    	y[i]+=j.getY()*getHeight()/plateau.getY();
+                    	y[l]+=i*getHeight()/plateau.getY();
                     }
                     
                     
