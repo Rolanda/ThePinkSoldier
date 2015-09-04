@@ -6,6 +6,8 @@
 
 package thepinksoldier;
 
+import java.awt.Color;
+
 /**
  *
  * @author lopezb
@@ -15,6 +17,8 @@ public class Forme {
 	private char image;
 	private String nom = "";
 	private int x,y;
+        private int position_X, position_Y;
+        private Color graphiqueColor;
 	private String couleur="";
 	
 	Forme(String nom , int x, int y ){
@@ -27,15 +31,19 @@ public class Forme {
 	public char representation(String nom){
 		if(nom.equals("rond")){
 			this.couleur = Constante.ANSI_BLUE;
+                        this.graphiqueColor = Color.BLUE;
 			return '●';
 		}else if(nom.equals("triangle")){
 			this.couleur = Constante.ANSI_GREEN;
+                        this.graphiqueColor = Color.GREEN;
 			return '▲';
 		}else if(nom.equals("carre")){
 			this.couleur = Constante.ANSI_RED;
+                        this.graphiqueColor = Color.RED;
 			return '■';
 		}else if(nom.equals("losange")){
 			this.couleur = Constante.ANSI_PURPLE;
+                        this.graphiqueColor = new Color(133, 85, 218);
 			return '♦';
 		}
 		return '★';
@@ -45,6 +53,11 @@ public class Forme {
 	public String getCouleur(){
 		return this.couleur;
 	}
+        
+        public Color getGraphiqueColor(){
+            return this.graphiqueColor;
+        }
+        
 	public String getNom(){
 		return nom;
 	}
