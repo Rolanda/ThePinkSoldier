@@ -26,7 +26,7 @@ public class Plateau {
         for (int i = 0; i < this.largeur; i++) {
             for (int j = 0; j < this.hauteur; j++) {
                 int random = rd.nextInt(nom.length);
-                grille[i][j] = new Forme(nom[random], i, j);
+                grille[i][j] = new Forme(nom[random]);//, i, j);
             }
         }
     }
@@ -101,7 +101,7 @@ public class Plateau {
                         } else {
                             if (chaine >= 3) {
                                 for (int l = 0; l < chaine; l++) {
-                                    grille[i][j + l] = new Forme("Vide", i, j + l);
+                                    grille[i][j + l] = new Forme("Vide");//, i, j + l);
                                 }
 //                                supprimerLigne(i, i, j, j+chaine);
                                 aAgit = true;
@@ -115,7 +115,7 @@ public class Plateau {
                     } else {
                         if (chaine >= 3) {
                             for (int l = 0; l < chaine; l++) {
-                                grille[i][j + l] = new Forme("Vide", i, j + l);
+                                grille[i][j + l] = new Forme("Vide");// ,i, j + l);
                             }
 //                                supprimerLigne(i, i, j, j+chaine);
                             aAgit = true;
@@ -145,7 +145,7 @@ public class Plateau {
                         } else {
                             if (chaine >= 3) {
                                 for (int l = 0; l < chaine; l++) {
-                                    grille[i + l][j] = new Forme("Vide", i + l, j);
+                                    grille[i + l][j] = new Forme("Vide");//, i + l, j);
                                 }
 //                                supprimerLigne(i, i + chaine, j, j);
                                 aAgit = true;
@@ -160,7 +160,7 @@ public class Plateau {
                     //}catch(Exception e){
                         if (chaine >= 3) {
                             for (int l = 0; l < chaine; l++) {
-                                grille[i + l][j] = new Forme("Vide", i + l, j);
+                                grille[i + l][j] = new Forme("Vide");//, i + l, j);
                             }
 //                                supprimerLigne(i, i, j, j+chaine);
                             aAgit = true;
@@ -215,11 +215,11 @@ public class Plateau {
                     if (this.grille[i][j].getNom().equals("Vide")) {
                         if (i > 0) {
                             this.grille[i][j] = this.grille[i - 1][j];
-                            this.grille[i - 1][j] = new Forme("Vide", i, j);
+                            this.grille[i - 1][j] = new Forme("Vide");//, i, j);
                         } else {
                             Random rand = new Random();
                             int random = rand.nextInt(nom.length);
-                            grille[i][j] = new Forme(nom[random], i, j);
+                            grille[i][j] = new Forme(nom[random]);//, i, j);
                         }
                     }
                 }
