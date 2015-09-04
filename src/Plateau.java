@@ -1,3 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package thepinksoldier;
+
+/**
+ *
+ * @author lopezb
+ */
 import java.util.Random;
 
 public class Plateau {
@@ -21,9 +32,9 @@ public class Plateau {
     }
 
     public boolean deplacer(Forme forme1, Forme forme2) {
-        if (Math.abs(forme1.getX() - forme2.getX()) > 1 || Math.abs(forme1.getY() - forme2.getY()) > 1) {
-            return false;
-        }
+//        if (Math.abs(forme1.getX() - forme2.getX()) > 1 || Math.abs(forme1.getY() - forme2.getY()) > 1) {
+//            return false;
+//        }
         Forme[][] tmp = grille.clone();
         destruction();
         for (int i = 0; i < grille.length; i++) {
@@ -40,10 +51,9 @@ public class Plateau {
         return true;
 
     }
-    
-    
+
     public boolean deplacer(int x1, int y1, int x2, int y2) {
-        
+
         Forme[][] tmp = grille.clone();
         destruction();
         for (int i = 0; i < grille.length; i++) {
@@ -67,59 +77,108 @@ public class Plateau {
             for (int j = 0; j < grille[i].length; j++) {
                 int chaine = 0;
                 for (int k = 0; k < 5; k++) {
-                    try {
+                    //try{
+                    if (j + k < grille[i].length) {
                         if (grille[i][j].equals(grille[i][j + k])) {
                             chaine++;
                         } else {
                             if (chaine >= 3) {
                                 for (int l = 0; l < chaine; l++) {
                                     grille[i][j + l] = new Forme("Vide", i, j + l);
-                                    aAgit= true;
-                                };
+                                }
+//                                supprimerLigne(i, i, j, j+chaine);
+                                aAgit = true;
+                                if (Constante.score >= 0) {
+                                    Constante.addPoints(chaine);
+                                }
                             }
                             chaine = 0;
                             break;
                         }
-                    } catch (Exception e) {
+                    } else {
                         if (chaine >= 3) {
                             for (int l = 0; l < chaine; l++) {
                                 grille[i][j + l] = new Forme("Vide", i, j + l);
-                                aAgit= true;
-                            };
+                            }
+//                                supprimerLigne(i, i, j, j+chaine);
+                            aAgit = true;
+                            if (Constante.score >= 0) {
+                                Constante.addPoints(chaine);
+                            }
                         }
-                        chaine = 0;
                         break;
                     }
+//                    } catch (Exception e) {
+//                        if (chaine >= 3) {
+//                            for (int l = 0; l < chaine; l++) 
+//                                grille[i][j + l] = new Forme("Vide", i, j + l);
+////                            supprimerLigne(i, i, j, j+chaine);
+//                            aAgit= true;
+//                        }
+//                        chaine = 0;
+//                        break;
+//                    }
                 }
                 chaine = 0;
                 for (int k = 0; k < 5; k++) {
-                    try {
+                    //try {
+                    if (i + k < grille.length) {
                         if (grille[i][j].equals(grille[i + k][j])) {
                             chaine++;
                         } else {
                             if (chaine >= 3) {
                                 for (int l = 0; l < chaine; l++) {
                                     grille[i + l][j] = new Forme("Vide", i + l, j);
-                                    aAgit= true;
-                                };
+                                }
+//                                supprimerLigne(i, i + chaine, j, j);
+                                aAgit = true;
+                                if (Constante.score >= 0) {
+                                    Constante.addPoints(chaine);
+                                }
                             }
                             chaine = 0;
                             break;
                         }
-                    } catch (Exception e) {
+                    } else {
                         if (chaine >= 3) {
                             for (int l = 0; l < chaine; l++) {
-                                grille[i + l][j] = new Forme("Vide", i + l, j);
-                                aAgit= true;
-                            };
+                                grille[i][j + l] = new Forme("Vide", i, j + l);
+                            }
+//                                supprimerLigne(i, i, j, j+chaine);
+                            aAgit = true;
+                            chaine = 0;
+                            if (Constante.score >= 0) {
+                                Constante.addPoints(chaine);
+                            }
                         }
-                        chaine = 0;
                         break;
                     }
+//                    } catch (Exception e) {
+//                        if (chaine >= 3) {
+//                            for (int l = 0; l < chaine; l++)
+//                                grille[i + l][j] = new Forme("Vide", i + l, j);
+////                                aAgit= true;
+//////                            };
+////                            supprimerLigne(i, i + chaine, j, j);
+//                            aAgit= true;
+//                        }
+//                        chaine = 0;
+//                        break;
+//                    }
                 }
             }
         }
         return aAgit;
+    }
+
+    public void supprimerLigne(int x1, int y1, int x2, int y2) {
+//        for(int i = x1 ; i < x2 ; i++)
+//            for(int j = y1 ; j < y2 ; j++)
+//                grille[i][j] = new Forme("Vide", i, j);
+        if (Constante.score >= 0) {
+            Constante.addPoints(Math.abs(x1 - x2) + Math.abs(y1 - y2));
+        }
+
     }
 
     public void glisser() {
@@ -148,7 +207,6 @@ public class Plateau {
                 }
             }
         } while (!done);
-        destruction();
     }
 
     public int getX() {
@@ -160,7 +218,7 @@ public class Plateau {
     }
 
     public String toString() {
-
+        System.out.print("\033[H\033[2J");
         String ans = "  ";
         char lettre = 'a';
         int chiffre = 1;

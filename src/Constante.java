@@ -1,5 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package thepinksoldier;
 
+/**
+ *
+ * @author lopezb
+ */
 public class Constante {
+    
+    public static int score = -1;
 
     public static final String ANSI_TEXT_DEFAULT_COLOR = "\u001B[39m";
     public static final String ANSI_BLACK_BG = "\u001B[40m";
@@ -23,4 +35,13 @@ public class Constante {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
+    
+        
+    public static void addPoints(int ajout){
+        score += ajout;
+    }
+    
+    public static int getScore(){
+        return score;
+    }
 }

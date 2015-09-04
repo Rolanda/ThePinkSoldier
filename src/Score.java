@@ -1,3 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package thepinksoldier;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -7,13 +15,11 @@ import java.util.TimerTask;
  */
 public class Score extends Thread {
     
-    private int score;
     int temps;
-    private Timer timer;
+    private final Timer timer;
     
     public Score(){
         super();
-        this.score = 0;
         this.temps = 120;
         this.timer = new Timer();
     }
@@ -23,7 +29,6 @@ public class Score extends Thread {
 
             @Override
             public void run() {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 temps--;
                 showScore();
             }
@@ -31,21 +36,11 @@ public class Score extends Thread {
     }
     
     public void showScore(){
-        //print((new StringBuilder()).append("\033[").append(5).append(";").append(20).append("H").toString());
         char escCode = 0x1B;
         System.out.print(String.format("%c[%d;%df",escCode,10,50));
         System.out.print("\033[0K");
-        System.out.print("Score : " + this.score + "  Temps : " + this.temps);
-        System.out.print(String.format("%c[%d;%df",escCode,10,1));
-        //System.out.print("\033[2K");
-    }
-    
-    public void addPoints(int ajout){
-        this.score += ajout;
-    }
-    
-    public int getScore(){
-        return this.score;
+        System.out.print("Score : " + Constante.score + "  Temps : " + this.temps);
+        System.out.print(String.format("%c[%d;%df",escCode,20,1));
     }
     
     
