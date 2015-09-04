@@ -16,15 +16,15 @@ public class Forme {
 	
 	private char image;
 	private String nom = "";
-	private int x,y;
+	//private int x,y;
         private int position_X, position_Y;
         private Color graphiqueColor;
 	private String couleur="";
 	
-	Forme(String nom , int x, int y ){
+	Forme(String nom){// , int x, int y ){
 		this.nom = nom;
-		this.y = y;
-		this.x = x;
+		//this.y = y;
+		//this.x = x;
 		this.image = representation(nom);
 	}
 	
@@ -65,22 +65,22 @@ public class Forme {
 		this.couleur=s;
 	}
 	
-	public int getX(){
-		return this.x;
-	}
+//	public int getX(){
+//		return this.x;
+//	}
+//	
+//	
+//	public int getY(){
+//		return this.y;
+//	}
 	
-	
-	public int getY(){
-		return this.y;
-	}
-	
-	public void setX(int x){
-		this.x = x;
-	}
-	
-	public void setY(int y){
-		this.x = y;
-	}
+//	public void setX(int x){
+//		this.x = x;
+//	}
+//	
+//	public void setY(int y){
+//		this.x = y;
+//	}
 	
 	public String toString(){
 		return ""+image;
